@@ -9,10 +9,21 @@ public class Token {
 	public static final int CLASSE_OPERATOR_RELACIONAL = 5;
 	public static final int CLASSE_OPERATOR_LOGICO = 6;
 	public static final int CLASSE_DELIMITADOR = 7;
-	public static final int CLASSE_SIMBOLO = 8;
-	
+		
 	private int tipo;
 	private String lexema;
+	private int linha;
+	
+	public Token(int tipo, String lexema) {
+		this.tipo = tipo;
+		this.lexema = lexema;
+	}
+	
+	public Token(int linha, int tipo, String lexema) {
+		this.linha = linha;
+		this.tipo = tipo;
+		this.lexema = lexema;
+	}
 	public int getTipo() {
 		return tipo;
 	}
@@ -24,6 +35,17 @@ public class Token {
 	}
 	public void setLexema(String lexema) {
 		this.lexema = lexema;
+	}
+	public int getLinha() {
+		return this.linha;
+	}
+	
+	public void setLinha(int linha) {
+		this.linha = linha;
+	}
+	
+	public String toString() {
+		return tipo + " " + lexema;
 	}
 
 }
