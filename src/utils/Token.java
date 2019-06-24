@@ -1,34 +1,52 @@
 package utils;
+import java.lang.StringBuilder;
 
 public class Token {
 	
-	public static final int CLASSE_PALAVRA_RESERVADA = 1;
-	public static final int CLASSE_IDENTIFICADOR = 2;
-	public static final int CLASSE_NUMERO = 3;
-	public static final int CLASSE_OPERATOR_ARITMETICO = 4;
-	public static final int CLASSE_OPERATOR_RELACIONAL = 5;
-	public static final int CLASSE_OPERATOR_LOGICO = 6;
-	public static final int CLASSE_DELIMITADOR = 7;
+	public static final String CLASSE_PALAVRA_RESERVADA = "Palavra Reservada";
+	public static final String CLASSE_IDENTIFICADOR = "Identificador";
+	public static final String CLASSE_NUMERO = "Numerico";
+	public static final String CLASSE_OPERATOR_ARITMETICO = "Aritmetico";
+	public static final String CLASSE_OPERATOR_RELACIONAL = "Relacional";
+	public static final String CLASSE_OPERATOR_LOGICO = "Lógico";
+	public static final String CLASSE_DELIMITADOR = "Delimitador";
 		
 	private int tipo;
+	private String descricao;
 	private String lexema;
 	private int linha;
 	
-	public Token(int tipo, String lexema) {
+	public Token() {
+		this.tipo = 0;
+		this.descricao = null;
+		this.lexema = null;
+		this.linha = 0;
+	}
+	public Token(int tipo, String descricao, String lexema) {
 		this.tipo = tipo;
 		this.lexema = lexema;
+		this.descricao = descricao;
 	}
 	
-	public Token(int linha, int tipo, String lexema) {
+	public Token(int tipo,String descricao, String lexema, int linha) {
 		this.linha = linha;
 		this.tipo = tipo;
 		this.lexema = lexema;
+		this.descricao = descricao;
 	}
 	public int getTipo() {
 		return tipo;
 	}
 	public void setTipo(int tipo) {
 		this.tipo = tipo;
+	}
+	
+	public String getDescricao() {
+		return descricao;
+	}
+	
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 	public String getLexema() {
 		return lexema;
@@ -45,7 +63,8 @@ public class Token {
 	}
 	
 	public String toString() {
-		return tipo + " " + lexema;
+		StringBuilder mensagem = new StringBuilder();
+		return mensagem.append(this.getDescricao()).append(" ").append(this.getLexema()).toString();
 	}
 
 }

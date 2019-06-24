@@ -12,7 +12,7 @@ import java.util.regex.*;
 
 public class Lexico {
 	
-	private final String numerico = ("^-?\\d*\\.{0,1}\\d+$");
+	private final String numerico = ("[+-]?[0-9]+(\\.[0-9]+)?([Ee][+-]?[0-9]+)?");
 	private final String identificador = ("^[a-zA-Z$][a-zA-Z_$0-9]*$");
 	private final String delimitador = (";|,|(|)|[|]|\\{|\\}|.");
 	private final String aritmetico = (" \\+|-|\\*|/|\\++|--");
@@ -23,30 +23,40 @@ public class Lexico {
 	private FileInputStream path;
 	private int linha;
 	
-	
-	public Lexico(String lexema) {
+	public Lexico(String dir) {
+		File folder = new File("dir");
+		File[] listOfFiles = folder.listFiles();
+
+		for (File file : listOfFiles) {
+		    if (file.isFile()) {
+		        System.out.println(file.getName());
+		    }
+		}
+	}
+	public void analyze(String lexema) {
+			
 			
              //System.out.println(Pattern.matches(relacional, "=="));
              if (Pattern.matches(palavraReservada, lexema)) {
-            	 tokens.add(new Token(1, lexema));
+            	 tokens.add(new Token(1, Token.CLASSE_PALAVRA_RESERVADA ,lexema));
              }
              else if (Pattern.matches(identificador, lexema)) {
-            	 tokens.add(new Token(2, lexema));
+            	 tokens.add(new Token(2,Token.CLASSE_IDENTIFICADOR ,lexema));
              }
              else if (Pattern.matches(numerico, lexema)) {
-            	 tokens.add(new Token(3, lexema));
+            	 tokens.add(new Token(3,Token.CLASSE_NUMERO ,lexema));
              }
              else if (Pattern.matches(aritmetico, lexema)) {
-            	 tokens.add(new Token(4, lexema));
+            	 tokens.add(new Token(4,Token.CLASSE_OPERATOR_ARITMETICO ,lexema));
              }
              else if (Pattern.matches(relacional, lexema)) {
-            	 tokens.add(new Token(5, lexema));
+            	 tokens.add(new Token(5,Token.CLASSE_OPERATOR_RELACIONAL ,lexema));
              }
              else if (Pattern.matches(logico, lexema)) {
-            	 tokens.add(new Token(6, lexema));
+            	 tokens.add(new Token(6,Token.CLASSE_OPERATOR_LOGICO ,lexema));
              }
              else if (Pattern.matches(delimitador, lexema)) {
-            	 tokens.add(new Token(7, lexema));
+            	 tokens.add(new Token(7,Token.CLASSE_DELIMITADOR ,lexema));
              }
              
              System.out.println(tokens.toString());
