@@ -1,0 +1,5 @@
+
+programa
+escreva // gera um pulo de linha
+escreva("     Entre com uma palavra : ")
+leia(v1) & 
