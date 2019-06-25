@@ -12,26 +12,47 @@ import java.util.regex.*;
 
 public class Lexico {
 	
-	private final String numerico = ("[+-]?[0-9]+(\\.[0-9]+)?([Ee][+-]?[0-9]+)?");
-	private final String identificador = ("^[a-zA-Z$][a-zA-Z_$0-9]*$");
-	private final String delimitador = (";|,|(|)|[|]|\\{|\\}|.");
-	private final String aritmetico = (" \\+|-|\\*|/|\\++|--");
-	private final String logico = ("!|&&|||");
-	private final String relacional = ("!=|==|<|<=|>|>=|=");
-	private final String palavraReservada = ("programa|constantes|variaveis|metodo|resultado|principal|senao|entao|se|enquanto|leia|escreva|vazio|inteiro|real|boleano|texto|verdadeiro|falso");
+	private static final String numerico = ("[+-]?[0-9]+(\\.[0-9]+)?([Ee][+-]?[0-9]+)?");
+	private static final String identificador = ("^[a-zA-Z$][a-zA-Z_$0-9]*$");
+	private static final String delimitador = (";|,|(|)|[|]|\\{|\\}|.");
+	private static final String aritmetico = (" \\+|-|\\*|/|\\++|--");
+	private static final String logico = ("!|&&|||");
+	private static final String relacional = ("!=|==|<|<=|>|>=|=");
+	private static final String palavraReservada = ("programa|constantes|variaveis|metodo|resultado|principal|senao|entao|se|enquanto|leia|escreva|vazio|inteiro|real|boleano|texto|verdadeiro|falso");
 	private List<Token> tokens = new ArrayList();
 	private FileInputStream path;
 	private int linha;
 	
-	public Lexico(String dir) {
-		File folder = new File("dir");
+	public Lexico(String dir) throws FileNotFoundException {
+		
+		File folder = new File(dir);
 		File[] listOfFiles = folder.listFiles();
 
 		for (File file : listOfFiles) {
 		    if (file.isFile()) {
-		        System.out.println(file.getName());
+		    	Scanner scanner = new Scanner(file);
+		    	while (scanner.hasNext()) {
+		    		if(scanner.hasNext(Lexico.palavraReservada))
+						analyze(scanner.next());
+					else if (scanner.hasNext(Lexico.identificador))
+						analyze(scanner.next());
+					else if (scanner.hasNext(Lexico.delimitador))
+						analyze(scanner.next());
+					else if (scanner.hasNext(Lexico.relacional))
+						analyze(scanner.next());
+					else if (scanner.hasNext(Lexico.logico))
+						analyze(scanner.next());
+					else if (scanner.hasNext(Lexico.numerico))
+						analyze(scanner.next());
+					else
+						scanner.next();
+					
+		    	
 		    }
 		}
+		
+		System.out.println(tokens);
+	}
 	}
 	public void analyze(String lexema) {
 			
@@ -59,8 +80,7 @@ public class Lexico {
             	 tokens.add(new Token(7,Token.CLASSE_DELIMITADOR ,lexema));
              }
              
-             System.out.println(tokens.toString());
-             
+                          
         
 	}
 
